@@ -4,8 +4,6 @@ const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID!;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET!;
-const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI!;
-
 // Increment this when scopes change to force users to re-authenticate
 export const SCOPE_VERSION = "2";
 
@@ -18,22 +16,30 @@ const SCOPES = [
   "playlist-read-collaborative",
 ].join(" ");
 
-export function getAuthUrl(): string {
+export function getRedirectUri(origin?: string): string {
+  if (origin) {
+    return `${origin}/api/auth/callback`;
+  }
+
+  return process.env.SPOTIFY_REDIRECT_URI!;
+}
+
+export function getAuthUrl(origin?: string): string {
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
     response_type: "code",
-    redirect_uri: REDIRECT_URI,
+    redirect_uri: getRedirectUri(origin),
     scope: SCOPES,
     prompt: "consent", // Force re-authorization to get new scopes
   });
   return `${SPOTIFY_AUTH_URL}?${params.toString()}`;
 }
 
-export async function getAccessToken(code: string) {
+export async function getAccessToken(code: string, origin?: string) {
   const body = new URLSearchParams({
     grant_type: "authorization_code",
     code,
-    redirect_uri: REDIRECT_URI,
+    redirect_uri: getRedirectUri(origin),
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
   });
