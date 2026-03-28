@@ -25,7 +25,7 @@ function LoadingScreen() {
 interface WrappedSelection {
   label: string;
   playlistId: string;
-  type: "playlist" | "timerange";
+  type: "playlist" | "current_year";
 }
 
 function AppContent() {
@@ -43,7 +43,7 @@ function AppContent() {
     return <LoginView />;
   }
 
-  const handleOptionSelected = (label: string, playlistId: string, type: "playlist" | "timerange") => {
+  const handleOptionSelected = (label: string, playlistId: string, type: "playlist" | "current_year") => {
     setShowYearSelector(false);
     setWrappedSelection({ label, playlistId, type });
   };

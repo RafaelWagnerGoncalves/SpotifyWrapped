@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
       });
       return response;
     }
+
     return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
   }
 }
@@ -32,44 +33,119 @@ interface WrappedOption {
   image?: string;
   label: string;
   subtitle: string;
-  type: "playlist" | "timerange";
+  type: "playlist" | "current_year";
+}
+
+interface PlaylistSummary {
+  id: string;
+  name: string;
+  owner?: { id?: string; display_name?: string };
+  images?: { url: string }[];
+  tracks?: { total?: number };
+  items?: { total?: number };
+}
+
+function getPlaylistTrackTotal(playlist: PlaylistSummary) {
+  return playlist.tracks?.total ?? playlist.items?.total ?? 0;
+}
+
+function extractYear(name: string) {
+  const match = name.match(/\b(19|20)\d{2}\b/);
+  return match ? Number(match[0]) : null;
+}
+
+function isSpotifyOwnedPlaylist(playlist: PlaylistSummary) {
+  const ownerId = playlist.owner?.id?.toLowerCase() || "";
+  const ownerName = playlist.owner?.display_name?.toLowerCase() || "";
+
+  return ownerId.includes("spotify") || ownerName.includes("spotify");
+}
+
+function isYearWrappedPlaylist(playlist: PlaylistSummary) {
+  if (!playlist.name) {
+    return false;
+  }
+
+  const lowerName = playlist.name.toLowerCase();
+  const year = extractYear(playlist.name);
+  const yearlyMarkers = [
+    "your top songs",
+    "top songs",
+    "wrapped",
+    "as tuas musicas mais ouvidas",
+    "as tuas músicas mais ouvidas",
+    "as musicas que voce mais ouviu",
+    "as músicas que você mais ouviu",
+    "as mais tocadas no seu",
+    "o teu top de",
+    "retrospectiva",
+    "flashback",
+  ];
+
+  return Boolean(
+    year &&
+    isSpotifyOwnedPlaylist(playlist) &&
+    yearlyMarkers.some((marker) => lowerName.includes(marker))
+  );
 }
 
 async function fetchWrappedYears(accessToken: string) {
-  const allPlaylists: { id: string; name: string; owner?: { id: string; display_name?: string }; images: { url: string }[]; tracks: { total: number } }[] = [];
+  const allPlaylists: PlaylistSummary[] = [];
   let offset = 0;
   const limit = 50;
   let apiTotal = Infinity;
 
   while (offset < apiTotal) {
-    const data = await getUserPlaylists(accessToken, limit, offset);
+    const data = await getUserPlaylists(accessToken, limit, offset) as {
+      total?: number;
+      items?: PlaylistSummary[];
+    };
+
     apiTotal = data.total || 0;
-    const items = (data.items || []).filter((item: unknown) => item !== null);
-    console.log(`[wrapped-years] offset=${offset}: items=${data.items?.length}, non-null=${items.length}, apiTotal=${apiTotal}, next=${data.next ? 'YES' : 'NULL'}`);
-    allPlaylists.push(...items);
+    allPlaylists.push(...(data.items || []).filter(Boolean));
     offset += limit;
-    if (!data.items || data.items.length === 0) break;
+
+    if (!data.items || data.items.length === 0) {
+      break;
+    }
   }
-  console.log(`[wrapped-years] Total collected: ${allPlaylists.length} playlists (API total: ${apiTotal})`);
 
-  // Time-range options (always available)
-  const timeRangeOptions: WrappedOption[] = [
-    { playlistId: "short_term", trackCount: 0, label: "Last 4 Weeks", subtitle: "Your recent favorites", type: "timerange" },
-    { playlistId: "medium_term", trackCount: 0, label: "Last 6 Months", subtitle: "Your mid-year wrapped", type: "timerange" },
-    { playlistId: "long_term", trackCount: 0, label: "All Time", subtitle: "Your all-time favorites", type: "timerange" },
-  ];
+  const currentYear = new Date().getFullYear();
 
-  // All user playlists as options
+  const currentYearOption: WrappedOption = {
+    playlistId: `current_year:${currentYear}`,
+    trackCount: 0,
+    label: `${currentYear} Wrapped`,
+    subtitle: `Based on your listening from January 1, ${currentYear} until today`,
+    type: "current_year",
+  };
+
+  const yearOptions: WrappedOption[] = allPlaylists
+    .filter(isYearWrappedPlaylist)
+    .map((playlist) => {
+      const year = extractYear(playlist.name) || currentYear;
+
+        return {
+          playlistId: playlist.id,
+          trackCount: getPlaylistTrackTotal(playlist),
+          image: playlist.images?.[0]?.url,
+          label: `${year} Wrapped`,
+          subtitle: `${playlist.name} · ${getPlaylistTrackTotal(playlist)} tracks`,
+          type: "playlist" as const,
+        };
+      })
+    .sort((a, b) => Number(b.label.slice(0, 4)) - Number(a.label.slice(0, 4)));
+
   const playlistOptions: WrappedOption[] = allPlaylists
-    .filter(pl => pl && pl.name)
-    .map(pl => ({
-      playlistId: pl.id,
-      trackCount: pl.tracks?.total || 0,
-      image: pl.images?.[0]?.url,
-      label: pl.name,
-      subtitle: `${pl.tracks?.total || 0} tracks · ${pl.owner?.display_name || pl.owner?.id || "Unknown"}`,
+    .filter((playlist) => playlist?.name && !isYearWrappedPlaylist(playlist))
+    .map((playlist) => ({
+      playlistId: playlist.id,
+      trackCount: getPlaylistTrackTotal(playlist),
+      image: playlist.images?.[0]?.url,
+      label: playlist.name,
+      subtitle: `${getPlaylistTrackTotal(playlist)} tracks · ${playlist.owner?.display_name || playlist.owner?.id || "Unknown"}`,
       type: "playlist" as const,
     }));
 
-  return { timeRangeOptions, playlistOptions };
+  return { currentYearOption, yearOptions, playlistOptions };
 }

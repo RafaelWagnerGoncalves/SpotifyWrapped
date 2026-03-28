@@ -9,12 +9,12 @@ import { X, ChevronLeft, ChevronRight, Music, Loader2, Trophy } from "lucide-rea
 interface WrappedExperienceProps {
   label: string;
   playlistId: string;
-  type: "playlist" | "timerange";
+  type: "playlist" | "current_year";
   onClose: () => void;
 }
 
 interface WrappedData {
-  source: "api" | "playlist";
+  source: "playlist" | "current_year";
   totalMinutes?: number;
   totalTracks: number;
   totalArtists: number;
@@ -71,7 +71,7 @@ function IntroCard({ label }: { label: string }) {
 }
 
 function StatsCard({ data }: { data: WrappedData }) {
-  const isPlaylist = data.source === "playlist";
+  const hasMinutes = typeof data.totalMinutes === "number" && data.totalMinutes > 0;
   return (
     <div className="flex flex-col items-center justify-center h-full text-center px-8">
       <motion.div
@@ -79,12 +79,12 @@ function StatsCard({ data }: { data: WrappedData }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", stiffness: 150, damping: 12, delay: 0.3 }}
       >
-        {isPlaylist && data.totalMinutes ? (
+        {hasMinutes ? (
           <>
-            <p className="text-lg text-[#b3b3b3] mb-2">Your top songs added up to</p>
-            <h1 className="text-6xl md:text-8xl font-black text-[#1DB954] mb-2">
-              {data.totalMinutes.toLocaleString()}
-            </h1>
+              <p className="text-lg text-[#b3b3b3] mb-2">Your top songs added up to</p>
+              <h1 className="text-6xl md:text-8xl font-black text-[#1DB954] mb-2">
+                {data.totalMinutes?.toLocaleString()}
+              </h1>
             <p className="text-2xl font-bold mb-8">minutes of music</p>
           </>
         ) : (
@@ -103,7 +103,7 @@ function StatsCard({ data }: { data: WrappedData }) {
         transition={{ delay: 0.7, duration: 0.5 }}
         className="flex gap-8"
       >
-        {isPlaylist && (
+        {hasMinutes && (
           <div className="text-center">
             <p className="text-3xl font-black">{data.totalTracks.toLocaleString()}</p>
             <p className="text-sm text-[#b3b3b3]">top songs</p>

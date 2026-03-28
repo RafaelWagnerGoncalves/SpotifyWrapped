@@ -1,23 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserPlaylists, refreshAccessToken } from "@/lib/spotify";
 
+interface PlaylistApiItem {
+  id: string;
+  name?: string;
+  owner?: { id?: string; display_name?: string };
+  images?: { url: string }[];
+  tracks?: { total?: number };
+  items?: { total?: number };
+}
+
+function normalizePlaylist(item: PlaylistApiItem) {
+  return {
+    ...item,
+    tracks: {
+      total: item.tracks?.total ?? item.items?.total ?? 0,
+    },
+  };
+}
+
 async function fetchAllPlaylists(accessToken: string) {
-  const allItems: unknown[] = [];
+  const allItems: PlaylistApiItem[] = [];
   let offset = 0;
   const limit = 50;
   let total = Infinity;
 
   while (offset < total) {
-    const data = await getUserPlaylists(accessToken, limit, offset);
+    const data = await getUserPlaylists(accessToken, limit, offset) as { total?: number; items?: PlaylistApiItem[] };
     total = data.total || 0;
-    const items = (data.items || []).filter((item: unknown) => item !== null);
-    console.log(`[playlists] offset=${offset}: items=${data.items?.length}, non-null=${items.length}, total=${total}, next=${data.next ? 'YES' : 'NULL'}`);
-    allItems.push(...items);
+    const items = (data.items || []).filter((item): item is PlaylistApiItem => Boolean(item?.id));
+    allItems.push(...items.map(normalizePlaylist));
     offset += limit;
     if (!data.items || data.items.length === 0) break;
   }
 
-  console.log(`[playlists] DONE: collected ${allItems.length} playlists (API total: ${total})`);
+  const firstItem = allItems[0];
+  console.log("[DEBUG] Total playlists:", allItems.length, "API total:", total);
+  console.log("[DEBUG] First playlist:", firstItem?.name, "tracks:", firstItem?.tracks);
+
   return { items: allItems, total: allItems.length };
 }
 

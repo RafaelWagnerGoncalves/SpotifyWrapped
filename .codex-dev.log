@@ -1,0 +1,135 @@
+
+> spotify-wrapped@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://26.157.115.173:3000
+- Environments: .env.local
+✓ Ready in 2.8s
+
+ GET / 200 in 914ms (next.js: 580ms, application-code: 333ms)
+ GET /api/auth/me 401 in 209ms (next.js: 187ms, application-code: 22ms)
+ GET /api/auth/login 307 in 51ms (next.js: 40ms, application-code: 11ms)
+ GET /api/auth/callback?code=AQCmKOTVElBJRuXs2g29cIwhcW-LP7Q7JI-1RZKR77ubepSLUWauZM3awA1vTflLqaPn4vQE-_Mqpvq1R8E2CXDw17yL-a7gwEqkzTGPZI_EkbgGggHxwRG3n_mhAThDfKeaKnKrnk2NbiWl6nUR61_Hv5ZttS620sfoATCI3OT9VezU620D0BYgsOIFUEc3hj9c992bTJ5MKc9VqCq8LIAYuRCVQhhmHoews7fDayzeEEf-9vjVWWCCGOvypkd3WEg2WqMBrpG8gxc4jL4Mw7mDiAA1EvHEZdDYXtCXsFwQFAh9Hu_YBuNM-CCZ_t-VRCEY3D08v06-gOP7bjQLJrwRcIVWPo2znZ4E83s 307 in 352ms (next.js: 41ms, application-code: 311ms)
+ GET / 200 in 44ms (next.js: 4ms, application-code: 40ms)
+ GET /api/auth/me 200 in 337ms (next.js: 4ms, application-code: 333ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 345ms (next.js: 47ms, application-code: 298ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 505ms (next.js: 93ms, application-code: 413ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 283ms (next.js: 3ms, application-code: 280ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 247ms (next.js: 2ms, application-code: 245ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 524ms (next.js: 47ms, application-code: 477ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 367ms (next.js: 3ms, application-code: 364ms)
+ GET /api/spotify/wrapped-years 200 in 391ms (next.js: 39ms, application-code: 353ms)
+ GET /api/spotify/wrapped-years 200 in 326ms (next.js: 3ms, application-code: 323ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 500 in 1094ms (next.js: 42ms, application-code: 1051ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 500 in 891ms (next.js: 4ms, application-code: 887ms)
+ GET / 200 in 47ms (next.js: 5ms, application-code: 42ms)
+ GET /api/auth/me 401 in 19ms (next.js: 14ms, application-code: 5ms)
+ GET /api/auth/login 307 in 8ms (next.js: 4ms, application-code: 4ms)
+ GET /api/auth/callback?code=AQDPlgy4gVgMMW-aIHpk5FZLstmfsTO14c1kEvelCEzO8nL8-Owa6TBCCgrpjuTmUiFVNI6nBfncYjyZ35vrD5uVKSOogpgB7-gT3sYqyiNWPQRzN5r4h-N_NbeOYTb0S_KSRU6Vgw1Ilgri8U1dYYzRAT4S2sYl25EgWAJlNvzy2ZrMPzfb-WLGR4KgQqwdUYqEJk5RV1yBYLIA0aF4l-aSnvf9KT78pTs606VI7cf9qDlJ_1RYkUGi8CvK2Zli_6_CzV1xY65jyAynhBL2lh0eP9ZZRA1u90CYDjkG6PZb9KmvsRCVO11fKaSDyAtpYG4C33CMvxE6u9lQh70mEwvpA_LKGz7tfTT5mDE 307 in 270ms (next.js: 3ms, application-code: 267ms)
+ GET / 200 in 35ms (next.js: 3ms, application-code: 32ms)
+ GET /api/auth/me 200 in 418ms (next.js: 9ms, application-code: 409ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 286ms (next.js: 4ms, application-code: 282ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 461ms (next.js: 9ms, application-code: 452ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 255ms (next.js: 3ms, application-code: 253ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 313ms (next.js: 3ms, application-code: 310ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 343ms (next.js: 2ms, application-code: 341ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 340ms (next.js: 2ms, application-code: 338ms)
+ GET /api/spotify/wrapped-years 200 in 497ms (next.js: 3ms, application-code: 494ms)
+ GET /api/spotify/wrapped-years 200 in 367ms (next.js: 3ms, application-code: 364ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 500 in 851ms (next.js: 3ms, application-code: 849ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 500 in 849ms (next.js: 3ms, application-code: 846ms)
+ GET /api/spotify/top-artists?limit=20&time_range=medium_term 200 in 378ms (next.js: 5ms, application-code: 373ms)
+ GET /api/spotify/top-artists?limit=20&time_range=medium_term 200 in 294ms (next.js: 6ms, application-code: 288ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 338ms (next.js: 3ms, application-code: 335ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 407ms (next.js: 8ms, application-code: 399ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 311ms (next.js: 3ms, application-code: 308ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 280ms (next.js: 3ms, application-code: 277ms)
+ GET / 200 in 55ms (next.js: 4ms, application-code: 50ms)
+ GET /api/auth/me 200 in 569ms (next.js: 188ms, application-code: 381ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 353ms (next.js: 65ms, application-code: 288ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 567ms (next.js: 133ms, application-code: 434ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 248ms (next.js: 3ms, application-code: 245ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 252ms (next.js: 2ms, application-code: 250ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 388ms (next.js: 56ms, application-code: 332ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 412ms (next.js: 2ms, application-code: 410ms)
+ GET / 200 in 58ms (next.js: 6ms, application-code: 52ms)
+ GET /api/auth/me 401 in 17ms (next.js: 8ms, application-code: 9ms)
+ GET /api/auth/login 307 in 67ms (next.js: 60ms, application-code: 8ms)
+ GET /api/auth/callback?code=AQAV-Yhl_eAdMGaAHkOlWIjI7H9MAN9RoFC8YyxASp0k-Fxmq36eZW1pi_Sxq6Gq2m37tGoP62Pogakvv0zOWn0ccetJ0l3oe1u4zxLKEx7aPU8A06BBAtBgHcdolWZ2KEsPUcV6xQlagoN1qvRisnlqijj_bckcJ_EGvg2aA9vCQezjNK4JEE-HtzewXdqwrYDaq2X5en1NH_ZsoiT9lN8WZZlDP6qUCtiWKRaXIULT3dCbfigkQa1JV_oB2Sd-GYLAR3W_vaPk8nEy0J9LxKIPAxv9ihCnE_xPdA4oK6vLJzkrB94BSym6vGYrNdDi_8RJgS_PROxJEE5qp28i1KnKG1CP5USNy-RCA68 307 in 330ms (next.js: 59ms, application-code: 272ms)
+ GET / 200 in 41ms (next.js: 3ms, application-code: 38ms)
+ GET /api/auth/me 200 in 318ms (next.js: 7ms, application-code: 310ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 243ms (next.js: 4ms, application-code: 239ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 403ms (next.js: 9ms, application-code: 394ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 254ms (next.js: 3ms, application-code: 251ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 317ms (next.js: 3ms, application-code: 314ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 367ms (next.js: 3ms, application-code: 364ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 311ms (next.js: 3ms, application-code: 308ms)
+ GET /api/spotify/wrapped-years 200 in 495ms (next.js: 59ms, application-code: 436ms)
+ GET /api/spotify/wrapped-years 200 in 308ms (next.js: 3ms, application-code: 305ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 200 in 1166ms (next.js: 59ms, application-code: 1107ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 200 in 1034ms (next.js: 4ms, application-code: 1030ms)
+ GET /api/spotify/wrapped-years 200 in 379ms (next.js: 5ms, application-code: 375ms)
+ GET /api/spotify/wrapped-years 200 in 390ms (next.js: 3ms, application-code: 388ms)
+ GET /api/spotify/top-tracks?limit=20&time_range=medium_term 200 in 681ms (next.js: 4ms, application-code: 677ms)
+ GET /api/spotify/top-tracks?limit=20&time_range=medium_term 200 in 364ms (next.js: 3ms, application-code: 360ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 436ms (next.js: 3ms, application-code: 433ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 341ms (next.js: 3ms, application-code: 338ms)
+ GET /api/spotify/recently-played?limit=20 200 in 507ms (next.js: 45ms, application-code: 463ms)
+ GET /api/spotify/recently-played?limit=20 200 in 310ms (next.js: 2ms, application-code: 308ms)
+ GET /api/spotify/top-tracks?limit=20&time_range=medium_term 200 in 272ms (next.js: 2ms, application-code: 270ms)
+ GET /api/spotify/top-tracks?limit=20&time_range=medium_term 200 in 266ms (next.js: 3ms, application-code: 263ms)
+ GET /api/spotify/top-tracks?limit=20&time_range=long_term 200 in 369ms (next.js: 3ms, application-code: 365ms)
+ GET /api/spotify/top-artists?limit=20&time_range=medium_term 200 in 327ms (next.js: 3ms, application-code: 325ms)
+ GET /api/spotify/top-artists?limit=20&time_range=medium_term 200 in 320ms (next.js: 5ms, application-code: 315ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 394ms (next.js: 3ms, application-code: 390ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 432ms (next.js: 3ms, application-code: 429ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 277ms (next.js: 3ms, application-code: 274ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 289ms (next.js: 4ms, application-code: 286ms)
+ GET /api/spotify/top-artists?limit=5&time_range=long_term 200 in 384ms (next.js: 2ms, application-code: 382ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=long_term 200 in 437ms (next.js: 3ms, application-code: 433ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 471ms (next.js: 2ms, application-code: 468ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: undefined
+ GET /api/spotify/playlists 200 in 314ms (next.js: 2ms, application-code: 312ms)
+ GET / 200 in 85ms (next.js: 4ms, application-code: 80ms)
+ GET /api/auth/me 401 in 15ms (next.js: 4ms, application-code: 12ms)
+ GET / 200 in 130ms (next.js: 43ms, application-code: 87ms)
+ GET /api/auth/me 200 in 764ms (next.js: 448ms, application-code: 316ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 570ms (next.js: 256ms, application-code: 314ms)
+ GET /api/spotify/top-artists?limit=5&time_range=medium_term 200 in 329ms (next.js: 2ms, application-code: 326ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 951ms (next.js: 525ms, application-code: 426ms)
+ GET /api/spotify/top-tracks?limit=5&time_range=medium_term 200 in 267ms (next.js: 3ms, application-code: 265ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: { total: 49 }
+ GET /api/spotify/playlists 200 in 610ms (next.js: 256ms, application-code: 354ms)
+[DEBUG] Total playlists: 34 API total: 34
+[DEBUG] First playlist: Favs - The Weeknd tracks: { total: 49 }
+ GET /api/spotify/playlists 200 in 300ms (next.js: 2ms, application-code: 298ms)
+ GET /api/spotify/wrapped-years 200 in 724ms (next.js: 282ms, application-code: 442ms)
+ GET /api/spotify/wrapped-years 200 in 330ms (next.js: 3ms, application-code: 327ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 200 in 1371ms (next.js: 258ms, application-code: 1114ms)
+ GET /api/spotify/wrapped-data?playlist_id=current_year:2026 200 in 1071ms (next.js: 3ms, application-code: 1069ms)

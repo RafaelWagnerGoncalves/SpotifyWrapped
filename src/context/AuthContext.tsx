@@ -34,6 +34,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (data.authenticated) {
           setUser(data.user);
         }
+      } else if (res.status === 401) {
+        const data = await res.json();
+        // If scopes have changed, clear user state but don't auto-redirect
+        // Let the UI show login button to avoid redirect loops
+        if (data.reason === "scope_upgrade") {
+          setUser(null);
+          console.log("Scope upgrade required, please log in again");
+        }
       }
     } catch (err) {
       console.error("Auth check failed:", err);
