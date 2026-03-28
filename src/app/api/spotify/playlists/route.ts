@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserPlaylists, refreshAccessToken } from "@/lib/spotify";
+import { fetchSpotifyPage, getUserPlaylists, refreshAccessToken } from "@/lib/spotify";
 
 interface PlaylistApiItem {
   id: string;
@@ -21,24 +21,27 @@ function normalizePlaylist(item: PlaylistApiItem) {
 
 async function fetchAllPlaylists(accessToken: string) {
   const allItems: PlaylistApiItem[] = [];
-  let offset = 0;
-  const limit = 50;
-  let total = Infinity;
+  let nextUrl: string | null = "https://api.spotify.com/v1/me/playlists?limit=50";
+  let total = 0;
 
-  while (offset < total) {
-    const data = await getUserPlaylists(accessToken, limit, offset) as { total?: number; items?: PlaylistApiItem[] };
-    total = data.total || 0;
+  while (nextUrl) {
+    const data = (
+      nextUrl.startsWith("http")
+        ? await fetchSpotifyPage(nextUrl, accessToken)
+        : await getUserPlaylists(accessToken, 50, 0)
+    ) as { total?: number; items?: PlaylistApiItem[]; next?: string | null };
+
+    total = data.total || total;
     const items = (data.items || []).filter((item): item is PlaylistApiItem => Boolean(item?.id));
     allItems.push(...items.map(normalizePlaylist));
-    offset += limit;
-    if (!data.items || data.items.length === 0) break;
+    nextUrl = data.next || null;
   }
 
   const firstItem = allItems[0];
   console.log("[DEBUG] Total playlists:", allItems.length, "API total:", total);
   console.log("[DEBUG] First playlist:", firstItem?.name, "tracks:", firstItem?.tracks);
 
-  return { items: allItems, total: allItems.length };
+  return { items: allItems, total: allItems.length, apiTotal: total };
 }
 
 export async function GET(request: NextRequest) {

@@ -30,7 +30,7 @@ export function getAuthUrl(origin?: string): string {
     response_type: "code",
     redirect_uri: getRedirectUri(origin),
     scope: SCOPES,
-    prompt: "consent", // Force re-authorization to get new scopes
+    show_dialog: "true", // Spotify-specific flag to force approval again
   });
   return `${SPOTIFY_AUTH_URL}?${params.toString()}`;
 }
@@ -98,7 +98,7 @@ async function fetchSpotifyWithRetry(
   retries = 3,
   baseDelay = 1000
 ): Promise<unknown> {
-  const url = `${SPOTIFY_API_BASE}${endpoint}`;
+  const url = endpoint.startsWith("http") ? endpoint : `${SPOTIFY_API_BASE}${endpoint}`;
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     const res = await fetch(url, {
@@ -181,6 +181,10 @@ export function needsReauthentication(scopeVersionCookie: string | undefined): b
 
 async function fetchSpotify(endpoint: string, accessToken: string) {
   return fetchSpotifyWithRetry(endpoint, accessToken);
+}
+
+export async function fetchSpotifyPage(url: string, accessToken: string) {
+  return fetchSpotifyWithRetry(url, accessToken);
 }
 
 export async function getUserProfile(accessToken: string) {

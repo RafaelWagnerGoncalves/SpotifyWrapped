@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserPlaylists, refreshAccessToken } from "@/lib/spotify";
+import { fetchSpotifyPage, getUserPlaylists, refreshAccessToken } from "@/lib/spotify";
 
 export async function GET(request: NextRequest) {
   let accessToken = request.cookies.get("spotify_access_token")?.value;
@@ -91,23 +91,21 @@ function isYearWrappedPlaylist(playlist: PlaylistSummary) {
 
 async function fetchWrappedYears(accessToken: string) {
   const allPlaylists: PlaylistSummary[] = [];
-  let offset = 0;
-  const limit = 50;
-  let apiTotal = Infinity;
+  let nextUrl: string | null = "https://api.spotify.com/v1/me/playlists?limit=50";
 
-  while (offset < apiTotal) {
-    const data = await getUserPlaylists(accessToken, limit, offset) as {
+  while (nextUrl) {
+    const data = (
+      nextUrl.startsWith("http")
+        ? await fetchSpotifyPage(nextUrl, accessToken)
+        : await getUserPlaylists(accessToken, 50, 0)
+    ) as {
       total?: number;
       items?: PlaylistSummary[];
+      next?: string | null;
     };
 
-    apiTotal = data.total || 0;
     allPlaylists.push(...(data.items || []).filter(Boolean));
-    offset += limit;
-
-    if (!data.items || data.items.length === 0) {
-      break;
-    }
+    nextUrl = data.next || null;
   }
 
   const currentYear = new Date().getFullYear();
